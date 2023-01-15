@@ -331,30 +331,11 @@ def custom_expansion_mappings(expansions):
         {"id": 30323, "baseId": 154597},
         {"id": 70704, "baseId": 154597},
     ]
-
-    # Original Tuscany should be an expansion for Viticulture Essential Edition (even if there is overlap)
-    # expansions[147101]["expansions"].append({ "id": 183394, "inbound": True})
-
-    # Poison Expansion for Council of Verona
-    # expansions[147827]["expansions"].append({ "id": 165469, "inbound": True})
-
-    # TODO Should be fixed. Map the Carcassonne Map Chips to Carcassonne
-    # expansions[291518]["expansions"].append({"id": 822, "inbound": True})
-
-    # TODO Should be fixed. Africa mapped to TtR: Europe
-    # expansions[131188]["expansions"].append({"id": 14996, "inbound": True})
-    # expansions[131188]["expansions"].append({"id": 225244, "inbound": True}) # TtR: Germany
-
-    # Vegas Wits & Wager -> Wits & Wagers It's Vegas Baby
-    # expansions[229967]["expansions"].append({"id": 286428, "inbound": True})
-
-    # # Hive pocket includes these
-    # expansions[30323]["expansions"].append({"id": 154597, "inbound": True})
-    # expansions[70704]["expansions"].append({"id": 154597, "inbound": True})
-
+    
+    # Make it more generic for people not owning these expansions
     for exp in exp_map:
-        expansions[exp["id"]]["expansions"].append({"id": exp["baseId"], "inbound": True})
-
+        if exp["baseId"] in expansions.keys():
+            expansions[exp['baseId']]['expansions'].append({"id":exp["id"], "inbound": True})
     return expansions
 
 # May want to make other changes to the family similar to the prefix logic
