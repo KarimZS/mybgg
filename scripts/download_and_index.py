@@ -18,7 +18,8 @@ def main(args):
     )
     num_games = len(collection)
     num_expansions = sum([len(game.expansions) for game in collection])
-    print(f"Imported {num_games} games and {num_expansions} expansions from boardgamegeek.")
+    num_accessories = sum([len(game.accessories) for game in collection ])
+    print(f"Imported {num_games} games, {num_expansions} expansions, and {num_accessories} accessories from boardgamegeek.")
 
     if not len(collection):
         assert False, "No games imported, is the boardgamegeek part of config.json correctly set?"
@@ -34,7 +35,7 @@ def main(args):
         indexer.add_objects(collection)
         indexer.delete_objects_not_in(collection)
 
-        print(f"Indexed {num_games} games and {num_expansions} expansions in algolia, and removed everything else.")
+        print(f"Indexed {num_games} games, {num_expansions} expansions, and {num_accessories} accessories in algolia, and removed everything else.")
     else:
         print("Skipped indexing.")
 
@@ -56,7 +57,7 @@ if __name__ == '__main__':
         action='store_true',
         help=(
             "Skip indexing in algolia. This is useful during development"
-            ", when you want to fetch data från BGG over and over again, "
+            ", when you want to fetch data from BGG over and over again, "
             "and don't want to use up your indexing quota with Algolia."
         )
     )
