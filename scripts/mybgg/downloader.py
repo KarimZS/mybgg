@@ -45,7 +45,7 @@ class Downloader():
         # Dummy game for linking extra promos and accessories
         collection_data.append(_create_blank_collection(EXTRA_EXPANSIONS_GAME_ID, "ZZZ: Expansions without Game (A-I)"))
 
-        collection_data = filter_duplicates(collection)
+        collection_data = filter_duplicates(collection_data)
 
         params = {"subtype": "boardgameaccessory", "own": 1}
         accessory_collection = self.client.collection(user_name=user_name, **params)
