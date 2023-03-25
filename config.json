@@ -6,7 +6,8 @@
     "boardgamegeek": {
         "user_name": "karimsoliman94",
         "extra_params": {
-            "own": 1
+            "own": 1,
+            "prevowned": 0
         }
     },
     "algolia": {
