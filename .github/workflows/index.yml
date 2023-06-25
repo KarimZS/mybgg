@@ -21,3 +21,4 @@ jobs:
       if: env.APIKEY != null
       run: |
         python scripts/download_and_index.py --apikey ${{env.APIKEY}} --debug
+    - uses: gautamkrishnar/keepalive-workflow@v1 # using the workflow with default settings
