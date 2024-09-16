@@ -245,22 +245,22 @@ class Indexer:
                 for num, type_ in game["players"]
             ]
 
-            # Algolia has a limit of 10kb per item, so remove unnecessary data from expansions
-            # attribute_map = {
-            #     "id": lambda x: x,
-            #     "name": lambda x: self._remove_game_name_prefix(x, game["name"]),
-            #     "players": lambda x: x or None,
-            # }
-            # game["expansions"] = [
-            #     {
-            #         attribute: func(expansion[attribute])
-            #         for attribute, func in attribute_map.items()
-            #         if func(expansion[attribute])
-            #     }
-            #     for expansion in game["expansions"]
-            # ]
-
-            game["expansions"] = self._minimize_field(game, "expansions", ["id", "name", "players"])
+            # Algolia has a limit of 10kb per item, so remove unnessesary data from expansions
+            attribute_map = {
+                "id": lambda x: x,
+                "name": lambda x: self._remove_game_name_prefix(x, game["name"]),
+            }
+            game["expansions"] = [
+                {
+                    attribute: func(expansion[attribute])
+                    for attribute, func in attribute_map.items()
+                    if func(expansion[attribute])
+                }
+                for expansion in game["expansions"]
+            ]
+            # Limit the number of expansions to 10 to keep the size down
+            game["has_more_expansions"] = len(game["expansions"]) > 10
+            game["expansions"] = game["expansions"][:10]
             game["accessories"] = self._minimize_field(game, "accessories")
             game["reimplements"] = self._minimize_field(game, "reimplements")
             game["reimplementedby"] = self._minimize_field(game, "reimplementedby")

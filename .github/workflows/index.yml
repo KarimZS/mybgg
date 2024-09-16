@@ -6,30 +6,19 @@ on:
   workflow_dispatch:
 jobs:
   index:
-
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v2
-    - name: Set up Python 3.9
-      uses: actions/setup-python@v2
+    - uses: actions/checkout@v4
+    - uses: actions/setup-python@v5
       with:
-        python-version: 3.9
-    - name: Cache pip dependencies
-      uses: actions/cache@v2
-      with:
-        path: ~/.cache/pip
-        key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
-        restore-keys: |
-          ${{ runner.os }}-pip-
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install -r scripts/requirements.txt
+        python-version: '3.12'
+        cache: 'pip'
+    - run: python -m pip install --upgrade pip
+    - run: pip install -r scripts/requirements.txt
     - name: Run script if secret is set
       env:
         APIKEY: ${{secrets.APIKEY}}
       if: env.APIKEY != null
       run: |
-        python scripts/download_and_index.py --apikey ${{env.APIKEY}}
+        python scripts/download_and_index.py --apikey ${{env.APIKEY}} --debug
     - uses: gautamkrishnar/keepalive-workflow@v1 # using the workflow with default settings
